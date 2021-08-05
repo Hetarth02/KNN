@@ -8,8 +8,11 @@ data_dict = data.to_dict()
 #Iris-versicolor
 #Iris-virginica
 
-u_input = [4.5, 3.6, 3.4, 1.3, 3]
+u_input = [6.5, 5.5, 7.5, 8.5, 11]
 lst = []
+check_lst = []
+pred_lst = []
+final_dict = {}
 
 """
 sl = input("Enter value of Sepallength: ")
@@ -27,15 +30,8 @@ u_input.append(float(pw))
 u_input.append(int(n_neighs))
 """
 
-def predict():
-	for i in data_dict:
-		while i == "sepallength":
-			for j in data_dict[i]:
-				d = (u_input[0] - data_dict[i][j])**2
-
 def sl():
 	i = u_input[0]
-	final_dict = {}
 	k = 0
 	
 	for j in data_dict["sepallength"]:
@@ -48,11 +44,12 @@ def sl():
 
 	while k < u_input[4]:
 		print(lst[k])
+		check_lst.append(lst[k])
 		k = k + 1
+	predict(check_lst)
 
 def sw():
 	i = u_input[1]
-	final_dict = {}
 	k = 0
 
 	for j in data_dict["sepalwidth"]:
@@ -65,11 +62,12 @@ def sw():
 
 	while k < u_input[4]:
 		print(lst[k])
+		check_lst.append(lst[k])
 		k = k + 1
+	predict(check_lst)
 
 def pl():
 	i = u_input[2]
-	final_dict = {}
 	k = 0
 	
 	for j in data_dict["petallength"]:
@@ -82,11 +80,12 @@ def pl():
 
 	while k < u_input[4]:
 		print(lst[k])
+		check_lst.append(lst[k])
 		k = k + 1
+	predict(check_lst)
 
 def pw():
 	i = u_input[3]
-	final_dict = {}
 	k = 0
 	
 	for j in data_dict["petalwidth"]:
@@ -99,7 +98,9 @@ def pw():
 
 	while k < u_input[4]:
 		print(lst[k])
+		check_lst.append(lst[k])
 		k = k + 1
+	predict(check_lst)
 
 def super():
 	input_total = 0
@@ -107,7 +108,6 @@ def super():
 	data_total = 0
 	data_mean = 0
 	k = 0
-	final_dict = {}
 	
 	for i in range(len(u_input) - 1):
 		input_total = input_total + u_input[i]
@@ -126,7 +126,34 @@ def super():
 	
 	while k < u_input[4]:
 		print(lst[k])
+		check_lst.append(lst[k])
 		k = k + 1
+	predict(check_lst)
+
+def predict(check_lst):
+	pred_class = check_lst
+	count_setosa = 0
+	count_versicolor = 0
+	count_virginica = 0
+	for i in range(len(pred_class)):
+		if pred_class[i][1][1] == "Iris-setosa":
+			count_setosa += 1
+		elif pred_class[i][1][1] == "Iris-versicolor":
+			count_versicolor += 1
+		elif pred_class[i][1][1] == "Iris-virginica":
+			count_virginica += 1
+		else:
+			print("Cannot predict accurately.")
+	
+	if count_setosa > count_versicolor:
+		if count_setosa > count_virginica:
+			print("Predicted Class: Iris-setosa.")
+		else:
+			print("Predicted Class: Iris-virginica.")
+	elif count_versicolor > count_virginica:
+		print("Predicted Class: Iris-versicolor.")
+	else:
+		print("Predicted Class: Iris-virginica.")
 
 method = int(input("Which char. do you want to compare with? \n1. SepalLength\n2. SepalWidth\n3. PetalLength\n4. PetalWidth\n"))
 
